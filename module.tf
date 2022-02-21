@@ -79,7 +79,7 @@ resource "kubernetes_service" "app" {
     namespace = kubernetes_namespace.app.metadata.0.name
   }
 
-wait_for_load_balancer = false
+  wait_for_load_balancer = false
   spec {
     selector = {
       app = var.app_name

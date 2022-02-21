@@ -9,8 +9,9 @@ backends (Django, Remix, Next.JS, etc.), every app basically boils down to:
 - 1 PostgreSQL database
 
 As such, this terraform module is an extremely generic and constrained IaC
-config that suits these applications. There are only two inputs:
+config that suits these applications. There are only three required inputs:
 
+- app name
 - domain
 - container (i.e. `jdevries3133/jackdevries.com:0.0.4`)
 
@@ -18,9 +19,9 @@ Other arguments, outputs, and other functionality might be added in the future,
 but for the average generic application, I know that this will do the trick,
 and it's better to keep things simple.
 
-For now, two replicas of each application container will run
+For now, **two replicas of each application container will run.**
 
-Applications for which this module would be used include:
+Applications for which this module would be used by me include:
 
 - `empacad.org`
 - `reset.empacad.org`
