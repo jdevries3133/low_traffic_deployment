@@ -4,22 +4,16 @@ variable "container" {
 }
 
 variable "domain" {
-  type = string
-  description = join("", [
-    "Public domain name for the application. App pods will be exposed via a ",
-    "service and ingress."
-  ])
+  type        = string
+  description = "Public domain name for the application. App pods will be exposed via a service and ingress."
 }
 
 /**
  * Used for namespace, and as a prefix for services, pods, etc.
  */
 variable "app_name" {
-  type = string
-  description = join("", [
-    "Name of the application. Used as the namespace, and used as a prefix ",
-    "for other objects. For example, \"appname-service\""
-  ])
+  type        = string
+  description = "Name of the application. Used as the namespace, and used as a prefix for other objects. For example, \"appname-service\""
 }
 
 /**
