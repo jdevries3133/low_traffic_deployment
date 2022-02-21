@@ -11,10 +11,9 @@ resource "kubernetes_config_map" "app_config" {
   }
 
   data = {
-    POSTGRESQL_DB       = var.app_name
-    POSTGRESQL_HOST     = "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local"
-    POSTGRESQL_USERNAME = var.app_name
-    POSTGRESQL_PASSWORD = random_password.db_password.result
+    POSTGRES_DB       = var.app_name
+    POSTGRES_HOST     = "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local"
+    POSTGRES_USERNAME = var.app_name
   }
 }
 
@@ -24,7 +23,7 @@ resource "kubernetes_secret" "app_secrets" {
     namespace = kubernetes_namespace.app.metadata.0.name
   }
   data = {
-    POSTGRESQL_PASSWORD = random_password.db_password.result
+    POSTGRES_PASSWORD = random_password.db_password.result
   }
 }
 

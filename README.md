@@ -39,9 +39,9 @@ my cluster, see [homelab_cluster](https://github.com/jdevries3133/homelab_cluste
 PostgreSQL connection details will be injected into the container as the
 following environment variables:
 
-- `POSTGRESQL_DB`
-- `POSTGRESQL_USERNAME`
-- `POSTGRESQL_PASSWORD`
-- `POSTGRESQL_HOST`
+- `POSTGRES_DB`
+- `POSTGRES_USERNAME`
+- `POSTGRES_PASSWORD`
+- `POSTGRES_HOST`
 
 The port will always be the standard Postgres port of `5432`.
