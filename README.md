@@ -12,7 +12,7 @@ As such, this terraform module is an extremely generic and constrained IaC
 config that suits these applications. There are only two inputs:
 
 - domain
-- container (name & tag assuming Docker Hub)
+- container (i.e. `jdevries3133/jackdevries.com:0.0.4`)
 
 Other arguments, outputs, and other functionality might be added in the future,
 but for the average generic application, I know that this will do the trick,
@@ -32,3 +32,15 @@ Applications for which this module would be used include:
 I have a kubernetes cluster with three nodes running in my home. This module
 deploys to that kubernetes cluster (or any cluster). For more details on
 my cluster, see [homelab_cluster](https://github.com/jdevries3133/homelab_cluster)
+
+## PostgreSQL Connection
+
+PostgreSQL connection details will be injected into the container as the
+following environment variables:
+
+- `POSTGRESQL_DB`
+- `POSTGRESQL_USERNAME`
+- `POSTGRESQL_PASSWORD`
+- `POSTGRESQL_HOST`
+
+The port will always be the standard Postgres port of `5432`.
