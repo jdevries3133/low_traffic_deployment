@@ -130,8 +130,8 @@ resource "kubernetes_ingress_v1" "app" {
  */
 
 resource "random_password" "db_password" {
-  length  = 32
-  special = true
+  length  = 48
+  special = false
 }
 
 resource "helm_release" "db" {
