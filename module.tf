@@ -11,9 +11,9 @@ resource "kubernetes_config_map" "app_config" {
   }
 
   data = {
-    POSTGRES_DB       = var.app_name
-    POSTGRES_HOST     = "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local"
-    POSTGRES_USERNAME = var.app_name
+    POSTGRES_DB   = var.app_name
+    POSTGRES_HOST = "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local"
+    POSTGRES_USER = var.app_name
   }
 }
 
