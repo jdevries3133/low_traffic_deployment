@@ -139,15 +139,15 @@ resource "helm_release" "db" {
   namespace  = kubernetes_namespace.app.metadata.0.name
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
-  version    = "10.16.1"
+  version    = "11.0.8"
 
   set {
-    name  = "global.postgresql.postgresqlDatabase"
+    name  = "global.postgresql.auth.database"
     value = var.app_name
   }
 
   set {
-    name  = "global.postgresql.postgresqlUsername"
+    name  = "global.postgresql.auth.postgresqlUsername"
     value = var.app_name
   }
 
@@ -158,7 +158,7 @@ resource "helm_release" "db" {
   }
 
   set_sensitive {
-    name  = "global.postgresql.postgresqlPassword"
+    name  = "global.postgresql.auth.postgresqlPassword"
     value = random_password.db_password.result
   }
 
