@@ -25,3 +25,9 @@ variable "application_port" {
   default     = 8000
   description = "Port that your pod wants to expose to the outside world."
 }
+
+variable "extra_env" {
+  type = map(string)
+  default = {}
+  description = "Extra environment variables to add to the ConfigMap injected into the pod environment"
+}

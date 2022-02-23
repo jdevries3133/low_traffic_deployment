@@ -10,11 +10,11 @@ resource "kubernetes_config_map" "app_config" {
     namespace = kubernetes_namespace.app.metadata.0.name
   }
 
-  data = {
+  data = merge({
     POSTGRES_DB   = var.app_name
     POSTGRES_HOST = "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local"
     POSTGRES_USER = var.app_name
-  }
+  }, var.extra_env)
 }
 
 resource "kubernetes_secret" "app_secrets" {
@@ -139,7 +139,7 @@ resource "helm_release" "db" {
   namespace  = kubernetes_namespace.app.metadata.0.name
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
-  version    = "11.0.8"
+  version    = "11.0.7"
 
   set {
     name  = "global.postgresql.auth.database"
@@ -147,7 +147,7 @@ resource "helm_release" "db" {
   }
 
   set {
-    name  = "global.postgresql.auth.postgresqlUsername"
+    name  = "global.postgresql.auth.username"
     value = var.app_name
   }
 
@@ -158,7 +158,7 @@ resource "helm_release" "db" {
   }
 
   set_sensitive {
-    name  = "global.postgresql.auth.postgresqlPassword"
+    name  = "global.postgresql.auth.password"
     value = random_password.db_password.result
   }
 
