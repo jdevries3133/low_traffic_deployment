@@ -85,7 +85,8 @@ resource "kubernetes_service" "app" {
     }
     session_affinity = "ClientIP"
     port {
-      port = var.application_port
+      port        = 8000
+      target_port = var.application_port
     }
   }
 }
@@ -114,7 +115,7 @@ resource "kubernetes_ingress_v1" "app" {
             service {
               name = kubernetes_service.app.metadata.0.name
               port {
-                number = var.application_port
+                number = 8000
               }
             }
           }

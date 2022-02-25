@@ -27,7 +27,7 @@ variable "application_port" {
 }
 
 variable "extra_env" {
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
   description = "Extra environment variables to add to the ConfigMap injected into the pod environment"
 }
