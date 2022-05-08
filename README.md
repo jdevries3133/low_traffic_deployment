@@ -8,31 +8,33 @@ backends (Django, Remix, Next.JS, etc.), every app basically boils down to:
 - 1 application container
 - 1 PostgreSQL database
 
-As such, this terraform module is an extremely generic and constrained IaC
-config that suits these applications. There are only three required inputs:
+As such, this terraform module is an IaC config that suits these applications.
+There are only three required inputs:
 
 - app name
 - domain
-- container (i.e. `jdevries3133/jackdevries.com:0.0.4`)
+- container (fully qualified name i.e. `jdevries3133/jackdevries.com:0.0.4`)
 
-Other arguments, outputs, and other functionality might be added in the future,
-but for the average generic application, I know that this will do the trick,
-and it's better to keep things simple.
+Additional optional arguments allow apps to grow a bit along with this config,
+but ultimately this is a good config for prototyping a postgres-backed app.
+The whole kubernetes deployment is managed by this module, so there's not a
+lot of room for extending this module if you want to expose other services
+to the container.
 
-For now, **two replicas of each application container will run.**
+For now, **two replicas of each application container will run.** There is no
+auto-scaling or replica count argument.
 
 Applications for which this module would be used by me include:
 
-- `empacad.org`
-- `reset.empacad.org`
-- `songmakergallery.com`
-- `classfast.app`
+- [empacadmusic.org](https://empacadmusic.org)
+- [songmakergallery.com](https://songmakergallery.com)
+- [classfast.app](https://classfast.app)
 
-## Use Case
+## My Cluster
 
-I have a kubernetes cluster with three nodes running in my home. This module
-deploys to that kubernetes cluster (or any cluster). For more details on
-my cluster, see [homelab_cluster](https://github.com/jdevries3133/homelab_cluster)
+Learn all about my cluster by checking out my
+[homelab_cluster](https://github.com/jdevries3133/homelab_cluster)
+repository.
 
 ## PostgreSQL Connection
 
@@ -45,3 +47,9 @@ following environment variables:
 - `POSTGRES_HOST`
 
 The port will always be the standard Postgres port of `5432`.
+
+## Demo App
+
+A Django-based demo app is at `./demo`. It shows how an app might consume
+this terraform module, and the demo app is deployed at
+[ltdemo.jackdevries.com.](https://ltdemo.jackdevries.com)
