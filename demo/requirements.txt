@@ -1,6 +1,7 @@
-asgiref==3.5.0
+asgiref==3.5.1
 Django==4.0.2
 django-ipware==4.0.2
+django-types==0.15.0
 gunicorn==20.1.0
 psycopg2-binary==2.9.3
 sqlparse==0.4.2

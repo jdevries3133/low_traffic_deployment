@@ -23,9 +23,13 @@ provider "helm" {
   }
 }
 
+data "external" "git_describe" {
+  program = ["sh", "scripts/git_describe.sh"]
+}
+
 module "low_traffic_deployment" {
   source = "../"
-  container = "jdevries3133/low_traffic_demo_app:0.0.1"
+  container = "jdevries3133/low_traffic_demo_app:${data.external.git_describe.result.output}"
   app_name = "demo-low-traffic"
-  domain = "jackdevries.com"
+  domain = "ltdemo.jackdevries.com"
 }

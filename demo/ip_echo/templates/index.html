@@ -4,17 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=<, initial-scale=1.0" />
     <title>Document</title>
+
   </head>
   <body>
     <h1>Demo App</h1>
     <p>Thanks for visiting!</p>
 
-    <p>You {% if not is_new %}last{% endif %} visited at {{ obj.created }}</p>
     <p>Your IP address is {{ obj.ip }}</p>
 
     <p>
       This information is now in our PostgreSQL database. I hope you're creeped
       out! Come back soon.
     </p>
+
+
+    <div style="display: flex; flex-gap: 2rem;">
+      <div>
+        <h1>All Past Visitors</h1>
+        <ul>
+          {% for visit in all_visits %}
+            <li>
+              {{ visit.ip}} on {{ visit.created|date:"r"}}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h1>Your Past Visits</h1>
+        <ul>
+          {% for visit in self_visits %}
+            <li>{{ visit.created|date:"r"}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
   </body>
 </html>
+
+
+{% comment %}
+vi:filetype=htmldjango
+{% endcomment %}

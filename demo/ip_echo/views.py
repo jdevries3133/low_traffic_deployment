@@ -1,3 +1,4 @@
+from typing import cast
 from django.shortcuts import render
 
 from ipware import get_client_ip
@@ -5,8 +6,13 @@ from ipware import get_client_ip
 from .models import Example
 
 def index(request):
-    ip, _ = get_client_ip(request)
-    obj, created = Example.objects.get_or_create(ip=ip)  # type: ignore
+    ip = cast(str, get_client_ip(request)[0])
 
-    return render(request, 'index.html', context={'obj': obj, 'is_new': created })
+    context = {
+        'all_visits': Example.objects.all(),
+        'self_visits': Example.objects.filter(ip=ip)
+    }
 
+    Example.objects.create(ip=ip)
+
+    return render(request, 'index.html', context=context)
