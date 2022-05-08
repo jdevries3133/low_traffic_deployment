@@ -13,6 +13,6 @@ def index(request):
         'self_visits': Example.objects.filter(ip=ip)
     }
 
-    Example.objects.create(ip=ip)
+    context['current_visit'] = Example.objects.create(ip=ip)
 
     return render(request, 'index.html', context=context)
