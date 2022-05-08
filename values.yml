@@ -1,6 +1,2 @@
-primary:
-  annotations:
-    backup.velero.io/backup-volumes: data
-
 global:
   storageClass: openebs-jiva-csi-default
