@@ -24,3 +24,10 @@ variable "extra_env" {
   default     = {}
   description = "Extra environment variables to add to the ConfigMap injected into the pod environment"
 }
+
+
+variable "storage_size" {
+  type = string
+  default = "1Gi"
+  description = "Size of PVC for Postgres data. Bitnami's default is 8Gi, but that's too big for me."
+}

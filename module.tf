@@ -142,6 +142,8 @@ resource "helm_release" "db" {
   chart      = "postgresql"
   version    = "11.0.7"
 
+  values = [file("${path.module}/values.yml")]
+
   set {
     name  = "global.postgresql.auth.database"
     value = var.app_name
@@ -152,10 +154,9 @@ resource "helm_release" "db" {
     value = var.app_name
   }
 
-
   set {
-    name  = "global.storageClass"
-    value = "openebs-jiva-csi-default"
+    name = "primary.persistence.size"
+    value = var.storage_size
   }
 
   set_sensitive {
