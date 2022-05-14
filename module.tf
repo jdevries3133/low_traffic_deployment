@@ -155,7 +155,7 @@ resource "helm_release" "db" {
   }
 
   set {
-    name = "primary.persistence.size"
+    name  = "primary.persistence.size"
     value = var.storage_size
   }
 

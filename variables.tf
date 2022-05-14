@@ -27,7 +27,7 @@ variable "extra_env" {
 
 
 variable "storage_size" {
-  type = string
-  default = "1Gi"
+  type        = string
+  default     = "1Gi"
   description = "Size of PVC for Postgres data. Bitnami's default is 8Gi, but that's too big for me."
 }
