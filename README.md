@@ -45,8 +45,12 @@ following environment variables:
 - `POSTGRES_USERNAME`
 - `POSTGRES_PASSWORD`
 - `POSTGRES_HOST`
+- `DATABASE_URL`
 
 The port will always be the standard Postgres port of `5432`.
+
+`DATABASE_URL` is a composition of the database name, username, password, and
+host, and it's used by some ORMs like Prisma.
 
 ## Demo App
 

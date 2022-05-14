@@ -24,6 +24,14 @@ resource "kubernetes_secret" "app_secrets" {
   }
   data = {
     POSTGRES_PASSWORD = random_password.db_password.result
+    DATABASE_URL = join("", [
+      "postgresql://",
+      var.app_name,
+      ":", random_password.db_password.result,
+      "@",
+      "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local:5432",
+      "/", var.app_name
+    ])
   }
 }
 
