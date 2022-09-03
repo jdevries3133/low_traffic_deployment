@@ -54,6 +54,4 @@ host, and it's used by some ORMs like Prisma.
 
 ## Demo App
 
-A Django-based demo app is at `./demo`. It shows how an app might consume
-this terraform module, and the demo app is deployed at
-[ltdemo.jackdevries.com.](https://ltdemo.jackdevries.com)
+A Django-based demo app is at `./demo`.
