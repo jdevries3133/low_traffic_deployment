@@ -56,7 +56,6 @@ resource "kubernetes_deployment" "app" {
           app = var.app_name
         }
       }
-
       spec {
         container {
           name  = var.app_name
@@ -66,14 +65,19 @@ resource "kubernetes_deployment" "app" {
               name = kubernetes_config_map.app_config.metadata.0.name
             }
           }
-
           env_from {
             secret_ref {
               name = kubernetes_secret.app_secrets.metadata.0.name
             }
           }
+          readiness_probe {
+            timeout_seconds = var.readiness_timeout
+            http_get {
+              path    = var.readiness_check_path
+              port    = var.application_port
+            }
+          }
         }
-
       }
     }
   }

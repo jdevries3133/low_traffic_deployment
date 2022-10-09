@@ -31,3 +31,15 @@ variable "storage_size" {
   default     = "1Gi"
   description = "Size of PVC for Postgres data. Bitnami's default is 8Gi, but that's too big for me."
 }
+
+variable "readiness_check_path" {
+  type        = string
+  default     = "/"
+  description = "URL path for a HTTP readiness check"
+}
+
+variable "readiness_timeout" {
+  type        = number
+  default     = 60
+  description = "Readiness check timeout (seconds)"
+}
