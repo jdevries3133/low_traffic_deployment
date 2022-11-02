@@ -17,18 +17,20 @@ There are only three required inputs:
 
 Additional optional arguments allow apps to grow a bit along with this config,
 but ultimately this is a good config for prototyping a postgres-backed app.
-The whole kubernetes deployment is managed by this module, so there's not a
+The whole Kubernetes deployment is managed by this module, so there's not a
 lot of room for extending this module if you want to expose other services
 to the container.
 
 For now, **two replicas of each application container will run.** There is no
 auto-scaling or replica count argument.
 
-Applications for which this module would be used by me include:
+Applications for where I use this module include:
 
 - [empacadmusic.org](https://empacadmusic.org)
 - [songmakergallery.com](https://songmakergallery.com)
 - [classfast.app](https://classfast.app)
+- [jackdevries.com](https://jackdevries.com)
+- [katetell.com](https://katetell.com)
 
 ## My Cluster
 
@@ -55,3 +57,12 @@ host, and it's used by some ORMs like Prisma.
 ## Demo App
 
 A Django-based demo app is at `./demo`.
+
+## Changelog
+
+### 1.0.0
+
+`readiness_probe` was removed and changed to `startup_probe`, which is what I
+was aiming for in the first place. But I'll take an excuse to move into the
+land of 1.0! This module is pretty stable and I've been using it across several
+apps for a while now.
