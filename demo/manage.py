@@ -2,6 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from time import sleep
 
 
 def main():
@@ -19,4 +20,6 @@ def main():
 
 
 if __name__ == "__main__":
+    # simulate slow startup
+    sleep(10)
     main()

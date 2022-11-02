@@ -70,11 +70,10 @@ resource "kubernetes_deployment" "app" {
               name = kubernetes_secret.app_secrets.metadata.0.name
             }
           }
-          readiness_probe {
-            timeout_seconds = var.readiness_timeout
+          startup_probe {
             http_get {
-              path    = var.readiness_check_path
-              port    = var.application_port
+              path = var.startup_probe_path
+              port = var.application_port
             }
           }
         }
