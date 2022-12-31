@@ -54,6 +54,27 @@ The port will always be the standard Postgres port of `5432`.
 `DATABASE_URL` is a composition of the database name, username, password, and
 host, and it's used by some ORMs like Prisma.
 
+## Startup Probe
+
+This config will, by default, perform a startup probe to the root route of the
+application server. This is configurable through some terraform variables
+(`startup_probe_path`, `readiness_timeout`). One thing that is not configurable
+is that the hostname on the readiness probe request will be the internal IP
+address of the pod. Some web application frameworks, like Django, include an
+`ALLOWED_HOSTS` setting where you explicitly whitelist specific hostnames for
+improved security, but neglecting to allow requests to the pod IP address will
+cause the startup probe to fail.
+
+To prevent this issue, you should ensure your application will accept requests
+where the internal pod IP is the host, which can be achieved as follows in
+Django, for example:
+
+```python
+ALLOWED_HOSTS = ["example.com"]
+if kube_host := os.getenv('KUBERNETES_SERVICE_HOST'):
+    ALLOWED_HOSTS.append(kube_host)
+```
+
 ## Demo App
 
 A Django-based demo app is at `./demo`.
