@@ -65,15 +65,18 @@ address of the pod. Some web application frameworks, like Django, include an
 improved security, but neglecting to allow requests to the pod IP address will
 cause the startup probe to fail.
 
-To prevent this issue, you should ensure your application will accept requests
-where the internal pod IP is the host, which can be achieved as follows in
-Django, for example:
+There are a few workaround options, which balance security and complexity
+differently.
 
-```python
-ALLOWED_HOSTS = ["example.com"]
-if kube_host := os.getenv('KUBERNETES_SERVICE_HOST'):
-    ALLOWED_HOSTS.append(kube_host)
-```
+| Workaround                                                                      | Security Implications                                                                     | Complexity Implications                                                         |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| enable requests from any host                                                   | completely undermines security that host whitelisting provides                            | quite simple in most web app frameworks                                         |
+| enable requests from your expected host and the pod's own IP with `hostname -i` | allowing any direct connection from inside the cluster still undermines security somewhat | requires more application code to get the hostname                              |
+| point the request to a special path for readiness                               | anyone can hit this path as long as it doesn't expose a DOS vulnerability; good           | requires non-trivial work, and a special route that has unique middleware rules |
+| don't use a readiness probe                                                     | quite simple!                                                                             | might cause downtime during deployments, requires you to fork this config & DIY |
+| go on vacation 🌴                                                               | nonexistent website can't be breached                                                     | live a simpler life                                                             |
+
+Overall, you'll have to choose the option that works best for you.
 
 ## Demo App
 
