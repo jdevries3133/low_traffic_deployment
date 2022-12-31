@@ -38,6 +38,12 @@ variable "startup_probe_path" {
   description = "URL path for a HTTP readiness check"
 }
 
+variable "startup_probe_host" {
+  type = string
+  default = null
+  description = "Host used when making the startup request, which will be the pods's own IP address by default"
+}
+
 variable "readiness_timeout" {
   type        = number
   default     = 60

@@ -74,6 +74,7 @@ resource "kubernetes_deployment" "app" {
             http_get {
               path = var.startup_probe_path
               port = var.application_port
+              host = var.startup_probe_host
             }
           }
         }
