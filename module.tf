@@ -151,7 +151,7 @@ resource "helm_release" "db" {
   namespace  = kubernetes_namespace.app.metadata.0.name
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
-  version    = "11.0.7"
+  version    = "12.1.14"
 
   values = [file("${path.module}/values.yml")]
 
