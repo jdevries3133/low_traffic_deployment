@@ -1,2 +1,2 @@
 global:
-  storageClass: openebs-jiva-csi-default
+  storageClass: mayastor
