@@ -151,28 +151,26 @@ resource "helm_release" "db" {
   namespace  = kubernetes_namespace.app.metadata.0.name
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
-  version    = "12.1.14"
-
-  values = [file("${path.module}/values.yml")]
+  version    = "11.9.13"
 
   set {
     name  = "global.postgresql.auth.database"
     value = var.app_name
   }
-
   set {
     name  = "global.postgresql.auth.username"
     value = var.app_name
   }
-
   set {
     name  = "primary.persistence.size"
     value = var.storage_size
   }
-
   set_sensitive {
     name  = "global.postgresql.auth.password"
     value = random_password.db_password.result
   }
-
+  set {
+    name = "global.storageClass"
+    value = "openebs-ssd"
+  }
 }

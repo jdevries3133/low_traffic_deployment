@@ -30,6 +30,6 @@ data "external" "git_describe" {
 module "low_traffic_deployment" {
   source = "../"
   container = "jdevries3133/low_traffic_demo_app:${data.external.git_describe.result.output}"
-  app_name = "demo-low-traffic"
+  app_name = "ltd"
   domain = "ltdemo.jackdevries.com"
 }
