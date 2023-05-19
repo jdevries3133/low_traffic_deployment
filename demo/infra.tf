@@ -28,8 +28,8 @@ data "external" "git_describe" {
 }
 
 module "low_traffic_deployment" {
-  source = "../"
+  source    = "../"
   container = "jdevries3133/low_traffic_demo_app:${data.external.git_describe.result.output}"
-  app_name = "ltd"
-  domain = "ltdemo.jackdevries.com"
+  app_name  = "ltd"
+  domain    = "ltdemo.jackdevries.com"
 }

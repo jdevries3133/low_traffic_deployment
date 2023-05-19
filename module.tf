@@ -12,7 +12,7 @@ resource "kubernetes_config_map" "app_config" {
 
   data = merge({
     POSTGRES_DB   = var.app_name
-    POSTGRES_HOST = "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local"
+    POSTGRES_HOST = "${kubernetes_deployment.db.metadata.0.name}.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local"
     POSTGRES_USER = var.app_name
   }, var.extra_env)
 }
@@ -29,7 +29,7 @@ resource "kubernetes_secret" "app_secrets" {
       var.app_name,
       ":", random_password.db_password.result,
       "@",
-      "${helm_release.db.name}-postgresql.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local:5432",
+      "${kubernetes_deployment.db.metadata.0.name}.${kubernetes_namespace.app.metadata.0.name}.svc.cluster.local:5432",
       "/", var.app_name
     ])
   }
@@ -146,31 +146,64 @@ resource "random_password" "db_password" {
   special = false
 }
 
-resource "helm_release" "db" {
-  name       = "db"
-  namespace  = kubernetes_namespace.app.metadata.0.name
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "postgresql"
-  version    = "11.9.13"
+resource "kubernetes_persistent_volume_claim" "db_data" {
+  metadata {
+    name      = "${var.app_name}-db-pvc"
+    namespace = kubernetes_namespace.app.metadata.0.name
+  }
+  spec {
+    access_modes = ["ReadWriteOnce"]
+    resources {
+      requests = {
+        storage = var.storage_size
+      }
+    }
+    storage_class_name = "ssd"
+  }
+}
 
-  set {
-    name  = "global.postgresql.auth.database"
-    value = var.app_name
+resource "kubernetes_deployment" "db" {
+  metadata {
+    name      = "${var.app_name}-psql"
+    namespace = kubernetes_namespace.app.metadata.0.name
   }
-  set {
-    name  = "global.postgresql.auth.username"
-    value = var.app_name
-  }
-  set {
-    name  = "primary.persistence.size"
-    value = var.storage_size
-  }
-  set_sensitive {
-    name  = "global.postgresql.auth.password"
-    value = random_password.db_password.result
-  }
-  set {
-    name = "global.storageClass"
-    value = "openebs-ssd"
+
+  spec {
+    replicas = 1
+    selector {
+      match_labels = {
+        app = "${var.app_name}-psql"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "${var.app_name}-psql"
+        }
+      }
+      spec {
+        container {
+          name  = "${var.app_name}-psql"
+          image = "postgresql/postgresql:15.2-bullseye"
+          // database name
+          env {
+            name  = "POSTGRES_DB"
+            value = var.app_name
+          }
+          env {
+            name  = "POSTGRES_USER"
+            value = var.app_name
+          }
+          env {
+            name  = "POSTGRES_PASSWORD"
+            value = random_password.db_password.result
+          }
+          volume_mount {
+            name = kubernetes_persistent_volume_claim.db_data.metadata.0.name
+            mount_path = "/var/lib/postgresql/data"
+          }
+        }
+      }
+    }
   }
 }

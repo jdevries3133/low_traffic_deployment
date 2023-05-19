@@ -29,7 +29,7 @@ variable "extra_env" {
 variable "storage_size" {
   type        = string
   default     = "1Gi"
-  description = "Size of PVC for Postgres data. Bitnami's default is 8Gi, but that's too big for me."
+  description = "Size of PVC for Postgres data."
 }
 
 variable "startup_probe_path" {
@@ -39,8 +39,8 @@ variable "startup_probe_path" {
 }
 
 variable "startup_probe_host" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Host used when making the startup request, which will be the pods's own IP address by default"
 }
 
