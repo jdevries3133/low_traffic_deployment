@@ -42,7 +42,7 @@ resource "kubernetes_deployment" "app" {
   }
 
   spec {
-    replicas = 2
+    replicas = var.replica_count
 
     selector {
       match_labels = {

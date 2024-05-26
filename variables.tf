@@ -49,3 +49,9 @@ variable "readiness_timeout" {
   default     = 60
   description = "Readiness check timeout (seconds)"
 }
+
+variable "replica_count" {
+  type = number
+  default = 2
+  description = "Count of replicas of you application to run"
+}
