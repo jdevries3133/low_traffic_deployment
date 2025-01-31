@@ -169,6 +169,10 @@ resource "helm_release" "db" {
     value = var.app_name
   }
   set {
+    name  = "global.storageClass"
+    value = "sql-db"
+  }
+  set {
     name  = "primary.persistence.size"
     value = var.storage_size
   }
