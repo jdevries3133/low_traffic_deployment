@@ -39,8 +39,8 @@ variable "startup_probe_path" {
 }
 
 variable "startup_probe_host" {
-  type = string
-  default = null
+  type        = string
+  default     = null
   description = "Host used when making the startup request, which will be the pods's own IP address by default"
 }
 
@@ -51,7 +51,7 @@ variable "readiness_timeout" {
 }
 
 variable "replica_count" {
-  type = number
-  default = 2
+  type        = number
+  default     = 2
   description = "Count of replicas of you application to run"
 }
